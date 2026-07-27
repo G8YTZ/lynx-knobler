@@ -1,5 +1,7 @@
 # Knobler
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+
 Firmware for the [M5Stack M5Dial](https://docs.m5stack.com/en/core/M5Dial) as a physical companion display for a [Lynx](https://github.com/G8YTZ/lynx-datv-receiver) DATV receiver — a "magic eye" signal display, preset/stream browsing via the rotary encoder, and self-service Wi-Fi setup.
 
 ## Features
@@ -22,4 +24,4 @@ See [`docs/INSTALL.md`](docs/INSTALL.md) for a full step-by-step guide, written 
 
 ## License
 
-See [`LICENSE`](LICENSE).
+GPL-3.0 — see [`LICENSE`](LICENSE) for the full text.
