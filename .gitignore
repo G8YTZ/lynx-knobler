@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Arduino IDE / PlatformIO build artifacts
+build/
+.pio/
+*.hex
+*.bin
+*.elf
+
+# Editor cruft
+.vscode/
+*.swp
+
+# Anything with a real IP/hostname or credentials in it — see
+# knobler.ino's LYNX_HOST placeholder before committing a working copy
+*_local.ino
+*.local.*
