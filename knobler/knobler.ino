@@ -564,7 +564,17 @@ bool pollLynxStatus() {
                      // offline rather than a one-off blip.
   }
 
-  DynamicJsonDocument doc(1024);
+  // Sized generously after a real-world failure: diversity mode plus an
+  // active stream produces a raw JSON response of ~1650 bytes (measured
+  // directly from a live Lynx receiver), and a parsed ArduinoJson
+  // document needs meaningfully more than the raw string length to hold
+  // it — the previous 1024-byte allocation was overflowing on exactly
+  // this combination, which deserializeJson() reports as a parse
+  // failure ("JSON error" below) even though the JSON itself was
+  // perfectly valid. ESP32 has ample RAM for a few KB here, so this
+  // errs well on the generous side rather than trying to trim it to
+  // the minimum that happens to work today.
+  DynamicJsonDocument doc(4096);
   if (deserializeJson(doc, response)) {
     lastError = "JSON error";
     return false;
