@@ -4,6 +4,8 @@
 
 Firmware for the [M5Stack M5Dial](https://docs.m5stack.com/en/core/M5Dial) as a physical companion display for a [Lynx](https://github.com/G8YTZ/lynx-datv-receiver) DATV receiver — a "magic eye" signal display, preset/stream browsing via the rotary encoder, and self-service Wi-Fi setup.
 
+**[⚡ Install straight from your browser](https://g8ytz.github.io/lynx-knobler/install.html)** — no software to install, just Chrome or Edge and a USB cable.
+
 ## Features
 
 - Live signal status — lock state, dBm, MER — read from Lynx's API
@@ -15,12 +17,14 @@ Firmware for the [M5Stack M5Dial](https://docs.m5stack.com/en/core/M5Dial) as a 
 ## Requirements
 
 - An M5Stack M5Dial and USB-C cable
-- [Arduino IDE](https://www.arduino.cc/en/software), with ESP32/M5Stack board support
-- A Lynx receiver running a version with the discovery responder (prints `Discovery responder listening on UDP :9998.` on startup)
+- A Lynx receiver running a version with the discovery responder (prints `Discovery responder listening on UDP :9998.` on startup), connected via wired Ethernet
+- [Arduino IDE](https://www.arduino.cc/en/software) — only needed if you're building from source rather than using the browser installer above
 
 ## Installation
 
-See [`docs/INSTALL.md`](docs/INSTALL.md) for a full step-by-step guide, written for first-time Arduino users.
+**Fastest:** use the [browser installer](https://g8ytz.github.io/lynx-knobler/install.html) linked above — nothing to install on your computer.
+
+For building from source, or if the browser installer doesn't work for you, see [`docs/INSTALL.md`](docs/INSTALL.md) for the full Arduino IDE walkthrough, written for first-time Arduino users.
 
 ## License
 
