@@ -16,3 +16,4 @@ build/
 # knobler.ino's LYNX_HOST placeholder before committing a working copy
 *_local.ino
 *.local.*
+!knobler_merged.bin
