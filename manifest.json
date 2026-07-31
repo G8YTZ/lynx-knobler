@@ -1,0 +1,13 @@
+{
+  "name": "Knobler",
+  "version": "v30",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "knobler_merged.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

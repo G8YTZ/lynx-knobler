@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install Knobler — M5Dial Firmware</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 640px;
+      margin: 60px auto;
+      padding: 0 20px;
+      line-height: 1.5;
+      color: #222;
+    }
+    h1 { margin-bottom: 0.2em; }
+    .subtitle { color: #666; margin-top: 0; }
+    .steps {
+      background: #f6f6f6;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .steps ol { margin: 0; padding-left: 1.2em; }
+    .steps li { margin-bottom: 8px; }
+    esp-web-install-button {
+      display: block;
+      margin: 24px 0;
+    }
+    .not-supported {
+      display: none;
+      background: #fff3cd;
+      border: 1px solid #ffe69c;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+    }
+    footer { margin-top: 48px; font-size: 0.9em; color: #888; }
+    footer a { color: #888; }
+  </style>
+</head>
+<body>
+  <h1>Install Knobler</h1>
+  <p class="subtitle">Flash the M5Dial firmware for Lynx directly from your browser — no Arduino IDE required.</p>
+
+  <div class="steps">
+    <strong>Before you start:</strong>
+    <ol>
+      <li>Connect your M5Dial to this computer with a USB-C cable (make sure it's a data cable, not charge-only).</li>
+      <li>Use <strong>Chrome</strong> or <strong>Edge</strong> — this won't work in Safari or Firefox, they don't support the required browser feature (Web Serial).</li>
+      <li>Close Arduino IDE's Serial Monitor or any other program that might be using the Dial's USB port.</li>
+    </ol>
+  </div>
+
+  <esp-web-install-button manifest="manifest.json">
+    <button slot="activate">Install Knobler</button>
+    <span slot="unsupported">
+      Your browser doesn't support this. Please open this page in
+      <strong>Chrome</strong> or <strong>Edge</strong> instead.
+    </span>
+    <span slot="not-allowed">
+      This page needs to be served over HTTPS to flash a device — if you're
+      seeing this on the published GitHub Pages site, please
+      <a href="https://github.com/G8YTZ/lynx-knobler/issues">let us know</a>.
+    </span>
+  </esp-web-install-button>
+
+  <p>
+    After installing, the Dial will restart and walk you through Wi-Fi setup
+    on its own screen. Full details in the
+    <a href="docs/INSTALL.md">written install guide</a> if you'd rather flash
+    via Arduino IDE, or if anything here doesn't go to plan.
+  </p>
+
+  <footer>
+    <a href="https://github.com/G8YTZ/lynx-knobler">Knobler on GitHub</a> ·
+    Part of the <a href="https://github.com/G8YTZ/lynx-datv-receiver">Lynx</a> DATV receiver project.
+  </footer>
+</body>
+</html>
