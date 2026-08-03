@@ -152,6 +152,34 @@ PresetItem presetItems[MAX_ITEMS];
 int    itemCount      = 0;
 int    menuSelected   = 0;
 long   lastEncoderPos = 0;
+
+// ── Backlight timeout ────────────────────────────────────────────────────
+// Backlight-off after inactivity, not true ESP32 deep sleep — deliberate
+// choice: M5Stack's own community forum documents that the M5Dial's
+// hardware sleep can't be reliably woken by the button when powered via
+// USB (only a timer wake works consistently in that mode), and this
+// device needs to support USB as one of three fully-working power paths,
+// not an edge case. Backlight-off keeps the ESP32 fully awake and
+// responsive — wakes instantly on the next input, no boot delay, no
+// redraw lag, works identically regardless of which power source is
+// active. The backlight is also the dominant power draw on a display
+// like this (commonly 60-80%+ of total device power), so this captures
+// most of the achievable saving without the USB-wake risk.
+const unsigned long BACKLIGHT_TIMEOUT_MS = 5UL * 60UL * 1000UL;  // 5 minutes
+const uint8_t BACKLIGHT_ON_LEVEL = 255;  // full brightness — sketch never
+                                           // set this explicitly before, so
+                                           // this preserves the previous
+                                           // always-on-at-default behaviour;
+                                           // tune down if a dimmer "on"
+                                           // level is preferred.
+unsigned long lastInputTime          = 0;
+bool          backlightOff           = false;
+long          backlightLastEncoderPos = 0;  // separate from lastEncoderPos
+                                              // above — this only tracks
+                                              // "did the encoder move" for
+                                              // wake purposes, independent
+                                              // of the browse-menu logic
+                                              // that also reads the encoder
 unsigned long menuOpenTime = 0;
 String confirmingName     = "";
 PresetType confirmingType = PRESET_RF;
@@ -235,6 +263,8 @@ void setup() {
   M5Dial.Display.drawString("Build v6.1 - Lynx", M5Dial.Display.width()/2, M5Dial.Display.height()/2);
   delay(1500);
   lastEncoderPos = M5Dial.Encoder.read();
+  backlightLastEncoderPos = lastEncoderPos;
+  lastInputTime = millis();
 
   if (ENABLE_DISCOVERY) {
     // Last-known-good IP from a prior successful discovery becomes the
@@ -268,6 +298,29 @@ void setup() {
 
 void loop() {
   M5Dial.update();
+
+  // ── Backlight timeout ──────────────────────────────────────────────────
+  // Checked unconditionally here, before any state-specific branching
+  // below, so it applies the same whether the normal screen, browse
+  // menu, or confirming screen is showing. wasPressed() is a per-update
+  // snapshot flag in M5Unified (not a consumed one-shot event), so
+  // reading it here doesn't interfere with the separate BtnA check
+  // further down for menu selection — both see the same press.
+  {
+    long curPos = M5Dial.Encoder.read();
+    bool inputNow = (curPos != backlightLastEncoderPos) || M5Dial.BtnA.wasPressed();
+    backlightLastEncoderPos = curPos;
+    if (inputNow) {
+      lastInputTime = millis();
+      if (backlightOff) {
+        M5Dial.Display.setBrightness(BACKLIGHT_ON_LEVEL);
+        backlightOff = false;
+      }
+    } else if (!backlightOff && millis() - lastInputTime >= BACKLIGHT_TIMEOUT_MS) {
+      M5Dial.Display.setBrightness(0);
+      backlightOff = true;
+    }
+  }
 
   // WiFi watchdog — runtime drops NEVER open the config portal or reboot.
   // Just retry the saved credentials on a cooldown; drawScreen() already

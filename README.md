@@ -26,6 +26,10 @@ Firmware for the [M5Stack M5Dial](https://docs.m5stack.com/en/core/M5Dial) as a 
 
 For building from source, or if the browser installer doesn't work for you, see [`docs/INSTALL.md`](docs/INSTALL.md) for the full Arduino IDE walkthrough, written for first-time Arduino users.
 
+## Maintainers
+
+Regenerating and publishing a new binary for the browser installer: see [`docs/REBUILD_BINARY.md`](docs/REBUILD_BINARY.md).
+
 ## License
 
 GPL-3.0 — see [`LICENSE`](LICENSE) for the full text.

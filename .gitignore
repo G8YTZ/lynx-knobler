@@ -7,6 +7,9 @@ build/
 *.hex
 *.bin
 *.elf
+# ...except the merged binary published for browser flashing — this one
+# is a real distributable asset, not a build-folder throwaway.
+!knobler_merged.bin
 
 # Editor cruft
 .vscode/
@@ -16,4 +19,3 @@ build/
 # knobler.ino's LYNX_HOST placeholder before committing a working copy
 *_local.ino
 *.local.*
-!knobler_merged.bin
